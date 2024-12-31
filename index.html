@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영어 문장 스크램블 프로그램</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .sentence-list {
+            margin-top: 20px;
+        }
+        .sentence-list li {
+            padding: 5px;
+            background-color: #e2e2e2;
+            margin-bottom: 5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>영어 문장 스크램블 프로그램</h1>
+
+    <!-- 문장 추가 폼 -->
+    <div class="form-group">
+        <label for="sentence">문장 추가:</label>
+        <form method="POST">
+            <input type="text" id="sentence" name="sentence" placeholder="스크램블할 문장을 입력하세요." required>
+            <button type="submit" name="action" value="add_sentence">문장 추가</button>
+        </form>
+    </div>
+
+    <!-- 랜덤 문장 배열 -->
+    <div class="form-group">
+        <form method="POST">
+            <button type="submit" name="action" value="shuffle_sentence">랜덤 배열</button>
+        </form>
+        {% if result %}
+            <p><strong>랜덤 배열 문장: </strong>{{ result }}</p>
+        {% endif %}
+    </div>
+
+    <!-- 정답 체크 -->
+    <div class="form-group">
+        <form method="POST">
+            <input type="text" name="user_input" placeholder="랜덤 배열 문장을 입력하세요." required>
+            <button type="submit" name="action" value="check_answer">정답 체크</button>
+        </form>
+    </div>
+
+    <!-- 문장 목록 -->
+    <div class="sentence-list">
+        <h3>문장 목록</h3>
+        <ul>
+            {% for sentence in sentence_list %}
+                <li>{{ sentence }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- 문장 삭제 -->
+    <div class="form-group">
+        <form method="POST">
+            <label for="selected_sentence">삭제할 문장 선택:</label>
+            <select name="selected_sentence">
+                {% for sentence in sentence_list %}
+                    <option value="{{ sentence }}">{{ sentence }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" name="action" value="delete_sentence">선택된 문장 삭제</button>
+        </form>
+    </div>
+
+    <!-- 모든 문장 삭제 -->
+    <div class="form-group">
+        <form method="POST">
+            <button type="submit" name="action" value="delete_all">모든 문장 삭제</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>
+
